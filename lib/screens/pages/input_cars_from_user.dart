@@ -119,10 +119,6 @@ class _InputCarsFromUserState extends State<InputCarsFromUser> {
                           ),
                         ),
                         onTap: () async {
-                          /*final user = FirebaseAuth.instance.currentUser;
-                  String? uid = user?.uid;
-                  print('USER ACTUAL $uid');*/
-
                           /// validate controllers
                           carName = _myController.carNameController.text;
                           carModel = _myController.carModelController.text;

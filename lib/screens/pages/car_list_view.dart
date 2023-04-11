@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project_for_13_april/screens/pages/car_view_fullscreen.dart';
+import 'package:project_for_13_april/screens/pages/input_cars_from_user.dart';
 import 'package:project_for_13_april/shared/loading.dart';
 
 import '../../models/car.dart';
@@ -29,7 +31,28 @@ class CarListView extends StatelessWidget {
     /// Best create it with ListView widget
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ma app bar'),
+        title: Text('Our added cars'),
+        backgroundColor: Colors.brown[400],
+        elevation: 0.0,
+
+        /*actions: <Widget>[
+          TextButton.icon(
+              icon: Icon(
+                Icons.keyboard_backspace_outlined,
+                color: Colors.black87,
+              ),
+              label: const Text(''),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          InputCarsFromUser()),
+                );
+                //widget.toggleView(),
+              }),
+        ],*/
+
       ),
       body: ListView.builder(
         // CarCollection List
@@ -39,7 +62,10 @@ class CarListView extends StatelessWidget {
             child: Column(
               children: [
                 GestureDetector(
-                  /// onTap: () => Navigator.pop(context), Back button implementation needed
+                onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CarViewFullScreen(carsFromFirebase: carsFromFirebase, index: index)),
+          ),
                   child: Padding(
                     padding: const EdgeInsets.only(top: 10.0),
                     child: Container(
