@@ -37,8 +37,9 @@ class _CarListViewState extends State<CarListView> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        automaticallyImplyLeading: false,
-        // back button disabled
+        // back button disabled/enabled
+        automaticallyImplyLeading: true,
+
         title: Text('Our added cars'),
         backgroundColor: Colors.brown[400],
         elevation: 0.0,

@@ -62,6 +62,7 @@ class CarViewFullScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
                       image: DecorationImage(
+                        filterQuality: FilterQuality.high,
                         image: NetworkImage(
                             '${carFromFirebase.carPhoto.toString()}'),
                         alignment: Alignment.topCenter,
