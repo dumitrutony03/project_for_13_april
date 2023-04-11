@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>728575997294-le5m8a05kfpam3a714qbdse1ai9iugb8.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.728575997294-le5m8a05kfpam3a714qbdse1ai9iugb8</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCKnijOicnsYLrHskII_ILLQrjIuc5I9s4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>728575997294</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.projectFor13April</string>
+	<key>PROJECT_ID</key>
+	<string>projectfor13april</string>
+	<key>STORAGE_BUCKET</key>
+	<string>projectfor13april.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:728575997294:ios:ade8ed5578a63b08237d7f</string>
+	<key>DATABASE_URL</key>
+	<string>https://projectfor13april-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>
