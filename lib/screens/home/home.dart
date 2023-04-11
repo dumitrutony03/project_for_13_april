@@ -20,6 +20,7 @@ class Home extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.brown[50],
         appBar: AppBar(
+          centerTitle: true,
           title: Text('Home page'),
           backgroundColor: Colors.brown[400],
           elevation: 0.0,
