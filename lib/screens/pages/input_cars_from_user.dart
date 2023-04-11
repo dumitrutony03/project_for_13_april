@@ -43,7 +43,7 @@ class _InputCarsFromUserState extends State<InputCarsFromUser> {
     /// We are sending this to the CarListView page thorought the navigator
     final cars = Provider.of<List<Car>>(context);
 
-    return SingleChildScrollView(
+    return load ? Loading() : SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -211,6 +211,7 @@ class _InputCarsFromUserState extends State<InputCarsFromUser> {
                         context,
                         MaterialPageRoute(builder: (context) => CarListView(carsFromFirebase: cars,)),
                       );
+                      load = false;
                     },
                   ),
                 ])

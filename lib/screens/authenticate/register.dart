@@ -111,6 +111,7 @@ class _RegisterState extends State<Register> {
                                   MaterialPageRoute(
                                       builder: (context) => Home()),
                                 );
+                                loading = false;
                               });
                             }
                           }
