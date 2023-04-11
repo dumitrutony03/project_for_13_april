@@ -6,11 +6,11 @@ import 'package:project_for_13_april/screens/pages/car_list_view.dart';
 import '../../models/car.dart';
 
 class CarViewFullScreen extends StatelessWidget {
-  final List<Car> carsFromFirebase;
+  final Car carFromFirebase;
   final int index;
 
   const CarViewFullScreen(
-      {Key? key, required this.carsFromFirebase, required this.index})
+      {Key? key, required this.carFromFirebase, required this.index})
       : super(key: key);
 
   @override
@@ -22,10 +22,10 @@ class CarViewFullScreen extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           backgroundColor: Colors.brown[400],
           title: Text(
-            '${carsFromFirebase[index].carName} ${carsFromFirebase[index].carModel}',
-            textAlign: TextAlign.center,
+            '${carFromFirebase.carName} ${carFromFirebase.carModel}',
           ),
 
           actions: <Widget>[
@@ -36,13 +36,15 @@ class CarViewFullScreen extends StatelessWidget {
                 ),
                 label: const Text(''),
                 onPressed: () {
-                  Navigator.push(
+                  // Going back to the last page we have visited
+                  Navigator.pop(context);
+
+                  /*Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            CarListView(carsFromFirebase: carsFromFirebase)),
-                  );
-                  //widget.toggleView(),
+                            CarListView(carsFromFirebase: carFromFirebase)),
+                  );*/
                 }),
           ],
 
@@ -61,7 +63,7 @@ class CarViewFullScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                       image: DecorationImage(
                         image: NetworkImage(
-                            '${carsFromFirebase[index].carPhoto.toString()}'),
+                            '${carFromFirebase.carPhoto.toString()}'),
                         alignment: Alignment.topCenter,
                         fit: BoxFit.fill,
                       ),
@@ -82,11 +84,11 @@ class CarViewFullScreen extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.only(left: 32, top: 16),
                   child: Text(
-                    "Name:  ${(carsFromFirebase[index].carName)}   \n\n"
-                    "Model:  ${(carsFromFirebase[index].carModel)}   \n\n"
-                    "Year:  ${(carsFromFirebase[index].carYear)}   \n\n"
-                    "Price:  \$${(carsFromFirebase[index].carPrice)}   \n\n"
-                    "Color:  ${(carsFromFirebase[index].carColor)}",
+                    "Name:  ${(carFromFirebase.carName)}   \n\n"
+                    "Model:  ${(carFromFirebase.carModel)}   \n\n"
+                    "Year:  ${(carFromFirebase.carYear)}   \n\n"
+                    "Price:  \$${(carFromFirebase.carPrice)}   \n\n"
+                    "Color:  ${(carFromFirebase.carColor)}",
                     textAlign: TextAlign.left,
                     style: GoogleFonts.manrope(
                       letterSpacing: 2,
