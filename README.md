@@ -1,16 +1,23 @@
 # project_for_13_april
 
-A new Flutter project.
+This was a challenge for myself.
+I had the opportunity to be selected for a Flutter Framework training, held by ARRK R&D, from Cluj-Napoca.
 
-## Getting Started
+After 2 weeks and 6 meetings, we had to get an app on our own, so I did it.
 
-This project is a starting point for a Flutter application.
+This is an Android Based Application, made exclusively using Flutter Framework, Android Studio, and Firebase. 
 
-A few resources to get you started if this is your first Flutter project:
+App content: 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Sign Up and Login pages, with validations
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Page where you add the CAR OBJECT details: Name, Model, Color, Year, Price and Photo ( This is a link you have to paste, outside the app, 
+  * EXAMPLE *: https://scene7.toyota.eu/is/image/toyotaeurope/LAN0007b_21:Large-Landscape?ts=19457&resMode=sharp2&op_usm=1.75,0.3,2,0 ).
+  
+- The OBJECT will then be saved in the database, in Firebase.
+  
+- Filtering ( Search bar where you can type THE CAR NAME you want to be shown to you ) and Favorite Adding Car/Cars,
+ 
+- Fresh UI with suggestively named fields,
+ 
+I am grateful that i had this opportunity, and I worked very hard, being the best version of myself.
