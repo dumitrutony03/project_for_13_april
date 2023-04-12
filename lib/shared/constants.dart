@@ -5,9 +5,9 @@ const textInputDecoration = InputDecoration(
   filled: true,
   contentPadding: EdgeInsets.all(16.0),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.white, width: 2.0),
+    borderSide: BorderSide(color: Colors.white10, width: 2.5),
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.pink, width: 2.0),
+    borderSide: BorderSide(color: Colors.white70, width: 2.5),
   ),
 );

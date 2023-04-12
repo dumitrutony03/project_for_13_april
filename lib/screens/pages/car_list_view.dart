@@ -36,25 +36,23 @@ class _CarListViewState extends State<CarListView> {
     super.initState();
   }
 
-  void runFilter(String enteredKeyword)
-  {
+  void runFilter(String enteredKeyword) {
     /// Applying search by KEYWORDS,
 
     List<Car> results = [];
 
-    if(enteredKeyword.isEmpty)
+    if (enteredKeyword.isEmpty)
       results = widget.carsFromFirebase;
-    else
-      {
-        results = widget.carsFromFirebase.where((car) =>
-            car.carName!.toLowerCase().contains(enteredKeyword.toLowerCase()))
-            .toList();
-      }
+    else {
+      results = widget.carsFromFirebase
+          .where((car) =>
+              car.carName!.toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
     setState(() {
       foundCars = results;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -65,17 +63,31 @@ class _CarListViewState extends State<CarListView> {
 
     /// Best create it with ListView widget
     return Scaffold(
+      backgroundColor: Colors.brown[50],
       appBar: AppBar(
-        centerTitle: true,
+        backgroundColor: Colors.grey[400],
+        centerTitle: false,
         // back button disabled/enabled
         automaticallyImplyLeading: true,
 
         actions: <Widget>[
           TextButton.icon(
             icon: Icon(
-              IconData(0xe1d7, fontFamily: 'MaterialIcons'),
+              IconData(
+                0xe1d7,
+                fontFamily: 'MaterialIcons',
+              ),
+              color: Colors.black87,
             ),
-            label: Text('See fav cars'),
+            label: Text(
+              'See fav cars',
+              style: GoogleFonts.manrope(
+                letterSpacing: 0.5,
+                fontWeight: FontWeight.w700,
+                color: Colors.black54,
+                fontSize: 17,
+              ),
+            ),
             onPressed: () async {
               Navigator.push(
                 context,
@@ -87,22 +99,34 @@ class _CarListViewState extends State<CarListView> {
           ),
         ],
 
-        title: Text('Our added cars'),
-        backgroundColor: Colors.brown[400],
-        elevation: 0.0,
+        title: Text(
+          'Our added cars',
+          style: GoogleFonts.manrope(
+            letterSpacing: 1,
+            fontWeight: FontWeight.w700,
+            color: Colors.black87,
+            fontSize: 17,
+          ),
+        ),
+        elevation: 5.0,
       ),
-
       body: Padding(
         padding: EdgeInsets.all(12.0),
         child: Column(
           children: [
-            SizedBox(height: 20.0,),
-            TextField(
-              onChanged: (value) => runFilter(value) ,
-              decoration: textInputDecoration.copyWith(labelText: 'Search by name', suffixIcon: Icon(Icons.search), hintText: 'Ex: Toyota'),
-
+            SizedBox(
+              height: 20.0,
             ),
-            SizedBox(height: 16,),
+            TextField(
+              onChanged: (value) => runFilter(value),
+              decoration: textInputDecoration.copyWith(
+                  labelText: 'Search by name',
+                  suffixIcon: Icon(Icons.search),
+                  hintText: 'Ex: Toyota'),
+            ),
+            SizedBox(
+              height: 16,
+            ),
             Expanded(
               /// Advantages instead of using ListView.builder is that, if you have a lot of cars that need to be shown
               /// ListView will create them as we access them from the database, instead,
@@ -179,7 +203,9 @@ class _CarListViewState extends State<CarListView> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 16,),
+                        SizedBox(
+                          height: 16,
+                        ),
                         Row(
                           ///                       IMPORTANT!!!!
                           /// IF THE USER LOGGS OUT / CLOSES THE APPLICATION,
@@ -189,10 +215,8 @@ class _CarListViewState extends State<CarListView> {
                                 // isFavorite: false,
                                 valueChanged: (isFavourite) {
                               isFavourite
-                                  ? favoriteCars
-                                      .add(foundCars[index])
-                                  : favoriteCars
-                                      .remove(foundCars[index]);
+                                  ? favoriteCars.add(foundCars[index])
+                                  : favoriteCars.remove(foundCars[index]);
                             }),
                           ],
                         ),
@@ -211,8 +235,8 @@ class _CarListViewState extends State<CarListView> {
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.manrope(
                                     letterSpacing: 3,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black54,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black87,
                                     fontSize: 14,
                                   )),
                             ],
@@ -234,8 +258,7 @@ class _CarListViewState extends State<CarListView> {
   Route _createRoute(int index) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
-          CarViewFullScreen(
-              carFromFirebase: foundCars[index], index: index),
+          CarViewFullScreen(carFromFirebase: foundCars[index], index: index),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;

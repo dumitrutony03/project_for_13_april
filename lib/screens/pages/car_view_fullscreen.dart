@@ -15,19 +15,24 @@ class CarViewFullScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.brown[400],
-          title: Text(
-            '${carFromFirebase.carName} ${carFromFirebase.carModel}',
-          ),
+        backgroundColor: Colors.brown[50],
 
+        appBar: AppBar(
+          backgroundColor: Colors.grey[400],
+          centerTitle: true,
+          title: Text(
+            '${carFromFirebase.carName} ${carFromFirebase.carModel}', style: GoogleFonts.manrope(
+            letterSpacing: 0.5,
+            fontWeight: FontWeight.w900,
+            color: Colors.black54,
+            fontSize: 17,
+          ),
+          ),
           actions: <Widget>[
             TextButton.icon(
                 icon: Icon(
@@ -47,7 +52,6 @@ class CarViewFullScreen extends StatelessWidget {
                   );*/
                 }),
           ],
-
         ),
         body: Column(
           children: [
@@ -94,7 +98,7 @@ class CarViewFullScreen extends StatelessWidget {
                     style: GoogleFonts.manrope(
                       letterSpacing: 2,
                       fontWeight: FontWeight.w800,
-                      color: Colors.black54,
+                      color: Colors.black87,
                       fontSize: 17,
                     ),
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:project_for_13_april/screens/authenticate/sign_in.dart';
 
 import '../../services/auth.dart';
@@ -26,15 +27,27 @@ class _RegisterState extends State<Register> {
     return loading
         ? Loading()
         : Scaffold(
-            backgroundColor: Colors.brown[100],
+            backgroundColor: Colors.brown[50],
             appBar: AppBar(
-              backgroundColor: Colors.brown[400],
-              elevation: 0.0,
-              title: const Text('Sign up'),
+              backgroundColor: Colors.grey[400],
+              elevation: 5.0,
+              title: Text('Sign up', style: GoogleFonts.manrope(
+                letterSpacing: 1,
+                fontWeight: FontWeight.w700,
+                color: Colors.black54,
+                fontSize: 17,
+              ),),
+
+              /// Going to SIGN IN page
               actions: <Widget>[
                 TextButton.icon(
-                    icon: const Icon(Icons.person),
-                    label: const Text('Sign In'),
+                    icon: const Icon(Icons.person, color: Colors.black87,),
+                    label: Text('Sign In', style: GoogleFonts.manrope(
+                      letterSpacing: 1,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black54,
+                      fontSize: 17,
+                    ),),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -43,6 +56,7 @@ class _RegisterState extends State<Register> {
                       //widget.toggleView(),
                     }),
               ],
+
             ),
             body: Container(
               padding:
@@ -76,47 +90,63 @@ class _RegisterState extends State<Register> {
                         setState(() => password = val);
                       },
                     ),
-                    const SizedBox(height: 12.0),
-                    TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.pink[400],
-                        ),
-                        child: const Text(
-                          'Register',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () async {
-                          // if the user has interracted with this form and button
-                          if (_formKey.currentState?.validate() != null) {
-                            setState(() {
-                              loading = true;
-                            });
+                    SizedBox(
+                      height: 60,
+                      width: 100,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 16.0),
+                          child: TextButton(
+                              style: TextButton.styleFrom(
+                                shape: BeveledRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12)
+                                ),
+                                backgroundColor: Colors.grey[100]?.withAlpha(100),
+                                foregroundColor: Colors.pink[400],
+                              ),
+                              child: Text(
+                                'Register',
+                                  style: GoogleFonts.manrope(
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black54,
+                                    fontSize: 17,
+                                  ),
+                              ),
+                              onPressed: () async {
+                                // if the user has interracted with this form and button
+                                if (_formKey.currentState?.validate() != null) {
+                                  setState(() {
+                                    loading = true;
+                                  });
 
-                            dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                                  dynamic result = await _auth.registerWithEmailAndPassword(email, password);
 
-                            print('AM INTRODUS IN BAZA DE DATE');
+                                  print('AM INTRODUS IN BAZA DE DATE');
 
-                            if (result == null) {
+                                  if (result == null) {
 
-                              setState(() {
-                                loading = false;
-                                error = 'Please supply a valid email';
-                              });
-                            } else {
-                              print('NU E NUUUUUUUUUUUL');
+                                    setState(() {
+                                      loading = false;
+                                      error = 'Please supply a valid email';
+                                    });
+                                  } else {
+                                    print('NU E NUUUUUUUUUUUL');
 
-                              setState(() {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Home()),
-                                );
-                                loading = false;
-                              });
-                            }
-                          }
-                        }),
-                    const SizedBox(height: 10.0),
+                                    setState(() {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Home()),
+                                      );
+                                      loading = false;
+                                    });
+                                  }
+                                }
+                              }),
+
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
                     Text(
                       error,
                       style: const TextStyle(color: Colors.red, fontSize: 14.0),

@@ -68,7 +68,8 @@ class _InputCarsFromUserState extends State<InputCarsFromUser> {
                         controller: _myController.carNameController,
                         keyboardType: TextInputType.text,
                         obscureText: false,
-                        decoration: textInputDecoration.copyWith(hintText: '*Minimum 3 characters'),
+                        decoration: textInputDecoration.copyWith(
+                            hintText: '*Minimum 3 characters'),
                       ),
                     ],
                   ),
@@ -92,7 +93,8 @@ class _InputCarsFromUserState extends State<InputCarsFromUser> {
                         controller: _myController.carModelController,
                         keyboardType: TextInputType.text,
                         obscureText: false,
-                        decoration: textInputDecoration.copyWith(hintText: '*Minimum 3 characters'),
+                        decoration: textInputDecoration.copyWith(
+                            hintText: '*Minimum 3 characters'),
                       ),
                     ],
                   ),
@@ -116,7 +118,8 @@ class _InputCarsFromUserState extends State<InputCarsFromUser> {
                         controller: _myController.carYearController,
                         keyboardType: TextInputType.number,
                         obscureText: false,
-                        decoration: textInputDecoration.copyWith(hintText: '*Minimum 4 characters'),
+                        decoration: textInputDecoration.copyWith(
+                            hintText: '*Minimum 4 characters'),
                       ),
                     ],
                   ),
@@ -140,7 +143,8 @@ class _InputCarsFromUserState extends State<InputCarsFromUser> {
                         controller: _myController.carColorController,
                         keyboardType: TextInputType.text,
                         obscureText: false,
-                        decoration: textInputDecoration.copyWith(hintText: '*Minimum 3 characters'),
+                        decoration: textInputDecoration.copyWith(
+                            hintText: '*Minimum 3 characters'),
                       ),
                     ],
                   ),
@@ -164,7 +168,8 @@ class _InputCarsFromUserState extends State<InputCarsFromUser> {
                         controller: _myController.carPriceController,
                         keyboardType: TextInputType.number,
                         obscureText: false,
-                        decoration: textInputDecoration.copyWith(hintText: '*Minimum 3 characters'),
+                        decoration: textInputDecoration.copyWith(
+                            hintText: '*Minimum 3 characters'),
                       ),
                     ],
                   ),
@@ -188,7 +193,8 @@ class _InputCarsFromUserState extends State<InputCarsFromUser> {
                         controller: _myController.carPhotoController,
                         keyboardType: TextInputType.text,
                         obscureText: false,
-                        decoration: textInputDecoration.copyWith(hintText: '*Minimum 6 characters'),
+                        decoration: textInputDecoration.copyWith(
+                            hintText: '*Minimum 6 characters'),
                       ),
                     ],
                   ),
@@ -208,130 +214,154 @@ class _InputCarsFromUserState extends State<InputCarsFromUser> {
                           SizedBox(
                             height: 5,
                           ),
-                          GestureDetector(
-                              child: Container(
-                                color: Colors.brown[400],
-                                height: 50,
-                                width: 75,
-                                child: const Icon(
-                                  IconData(0xe1d7, fontFamily: 'MaterialIcons'),
-                                  size: 40,
-                                  color: Colors.white70,
-                                ),
-                              ),
-                              onTap: () async {
-                                /// validate controllers
-                                carName = _myController.carNameController.text;
-                                carModel =
-                                    _myController.carModelController.text;
-                                carYear = _myController.carYearController.text;
-                                carColor =
-                                    _myController.carColorController.text;
-                                carPrice = int.tryParse(
-                                    _myController.carPriceController.text);
-                                carPhoto =
-                                    _myController.carPhotoController.text;
+                          SizedBox(
+                            height: 55,
+                            width: 55,
+                            child: GestureDetector(
+                              child: FittedBox(
+                                //<-- SEE HERE
+                                child: FloatingActionButton(
+                                  //<-- SEE HERE
+                                  backgroundColor: Colors.amberAccent,
+                                  child: Icon(
+                                    IconData(0xe1d7,
+                                        fontFamily: 'MaterialIcons'),
+                                    size: 35,
+                                    color: Colors.black87,
+                                  ),
 
-                                /// check if the input provided by the user is VALID
-                                bool result = FormControllers()
-                                    .checkControllers(carName, carModel,
-                                        carYear, carColor, carPrice, carPhoto);
-                                /*
+                                  onPressed: () async {
+                                    print('apasat coaie');
+
+                                    /// validate controllers
+                                    carName =
+                                        _myController.carNameController.text;
+                                    carModel =
+                                        _myController.carModelController.text;
+                                    carYear =
+                                        _myController.carYearController.text;
+                                    carColor =
+                                        _myController.carColorController.text;
+                                    carPrice = int.tryParse(
+                                        _myController.carPriceController.text);
+                                    carPhoto =
+                                        _myController.carPhotoController.text;
+
+                                    /// check if the input provided by the user is VALID
+                                    bool result = FormControllers()
+                                        .checkControllers(
+                                            carName,
+                                            carModel,
+                                            carYear,
+                                            carColor,
+                                            carPrice,
+                                            carPhoto);
+                                    /*
                   We can add an object into our database, with an UNIQUE ID
                   using this method:
                   -> We create a "car" object, we then add into our
                   collection "CarsCollection" our car in JSON format with
                   an ID automated generated by Firebase Google Cloud.
                    */
-                                if (!result) {
-                                  showSnackBAR('Wrong input!', context, Colors.white, Colors.red);
+                                    if (!result) {
+                                      showSnackBAR('Wrong input!', context,
+                                          Colors.white, Colors.red);
+                                    } else {
+                                      Car car = Car(
+                                          carName: carName,
+                                          carModel: carModel,
+                                          carYear: carYear,
+                                          carColor: carColor,
+                                          carPrice: carPrice,
+                                          carPhoto: carPhoto);
+                                      await FirebaseFirestore.instance
+                                          .collection("CarsCollection")
+                                          .add(car.toJson())
+                                          .then((DocumentReference doc) {
+                                        print('My document id is ${doc.id}');
+                                      });
 
-                                } else {
-                                  Car car = Car(
-                                      carName: carName,
-                                      carModel: carModel,
-                                      carYear: carYear,
-                                      carColor: carColor,
-                                      carPrice: carPrice,
-                                      carPhoto: carPhoto);
-                                  await FirebaseFirestore.instance
-                                      .collection("CarsCollection")
-                                      .add(car.toJson())
-                                      .then((DocumentReference doc) {
-                                    print('My document id is ${doc.id}');
-                                  });
+                                      print(
+                                          'AM ADAUGAT IN BAZA NOASTRA DE DATE');
+                                    }
 
-                                  print('AM ADAUGAT IN BAZA NOASTRA DE DATE');
-                                }
-
-                                /// We then clear our Textfields
-                                FormControllers().resetController(
-                                    _myController.carNameController,
-                                    _myController.carModelController,
-                                    _myController.carYearController,
-                                    _myController.carColorController,
-                                    _myController.carPriceController,
-                                    _myController.carPhotoController);
-                              }),
+                                    /// We then clear our Textfields
+                                    FormControllers().resetController(
+                                        _myController.carNameController,
+                                        _myController.carModelController,
+                                        _myController.carYearController,
+                                        _myController.carColorController,
+                                        _myController.carPriceController,
+                                        _myController.carPhotoController);
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
 
                       /// Another GestureDetector to view our cars and details
                       /// That we added before
-                      Column(children: [
-                        const Text(
-                          'View cars list',
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        GestureDetector(
-                          child: Container(
-                            color: Colors.brown[400],
-                            height: 50,
-                            width: 75,
-                            child: const Icon(
-                              IconData(0xe1b8, fontFamily: 'MaterialIcons'),
-                              size: 40,
-                              color: Colors.white70,
+                      Column(
+                        children: [
+                          Text(
+                            'View cars list',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          SizedBox(
+                            height: 55,
+                            width: 55,
+                            child: GestureDetector(
+                              child: FittedBox(
+                                //<-- SEE HERE
+                                child: FloatingActionButton(
+                                  child: Icon(
+                                      IconData(0xe3de, fontFamily: 'MaterialIcons'),
+                                    size: 35,
+                                    color: Colors.black87,
+                                  ),
+
+
+                                  // For the next page, where we view our added cars
+                                  onPressed: () {
+                                    setState(() {
+                                      load = true;
+                                    });
+                                    // We send the cars from DATABASE to be shown in the CarListView
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => CarListView(
+                                                carsFromFirebase: cars,
+                                              )),
+                                    );
+                                    load = false;
+                                  },
+                                ),
+                              ),
                             ),
                           ),
-                          onTap: () {
-                            setState(() {
-                              load = true;
-                            });
-
-                            // We send the cars from DATABASE to be shown in the CarListView
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CarListView(
-                                        carsFromFirebase: cars,
-                                      )),
-                            );
-                            load = false;
-                          },
-                        ),
-                      ])
+                        ],
+                      ),
                     ],
                   ),
-
-                  // For the next page, where we view our added cars
                 ],
               ),
             ),
           );
   }
-  void showSnackBAR(String text, BuildContext context, Color bgColor, Color textColor){
+
+  void showSnackBAR(
+      String text, BuildContext context, Color bgColor, Color textColor) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(
         text,
-        style: TextStyle(
-            color: textColor,
-            fontSize: 15
-        ),
+        style: TextStyle(color: textColor, fontSize: 15),
       ),
       duration: const Duration(seconds: 2),
       backgroundColor: bgColor,

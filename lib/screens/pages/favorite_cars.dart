@@ -16,7 +16,6 @@ class FavoriteCars extends StatefulWidget {
 class _FavoriteCarsState extends State<FavoriteCars> {
   @override
   Widget build(BuildContext context) {
-
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
 
@@ -29,24 +28,41 @@ class _FavoriteCarsState extends State<FavoriteCars> {
         print(car.carPhoto);
       });
     return Scaffold(
+      backgroundColor: Colors.brown[50],
       appBar: AppBar(
+        backgroundColor: Colors.grey[400],
         centerTitle: true,
+
         // back button disabled/enabled
-        automaticallyImplyLeading: true,
+        automaticallyImplyLeading: false,
 
         actions: <Widget>[
-          TextButton.icon(
-            icon: Icon(Icons.person),
-            label: Text('Back to cars'),
+          TextButton(
+            child: Text(
+              'Back to cars',
+              style: GoogleFonts.manrope(
+                letterSpacing: 0.5,
+                fontWeight: FontWeight.w700,
+                color: Colors.black54,
+                fontSize: 17,
+              ),
+            ),
             onPressed: () async {
               Navigator.pop(context);
             },
-          ),
+          )
         ],
 
-        title: Text('Our fav cars'),
-        backgroundColor: Colors.brown[400],
-        elevation: 0.0,
+        title: Text(
+          'Our fav cars',
+          style: GoogleFonts.manrope(
+            letterSpacing: 0.5,
+            fontWeight: FontWeight.w900,
+            color: Colors.black87,
+            fontSize: 17,
+          ),
+        ),
+        elevation: 5.0,
       ),
       body: ListView.builder(
         // CarCollection List
@@ -70,12 +86,13 @@ class _FavoriteCarsState extends State<FavoriteCars> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => CarViewFullScreen(
-                            carFromFirebase: widget.favoriteCars[index], index: index,
-                          )),
+                                carFromFirebase: widget.favoriteCars[index],
+                                index: index,
+                              )),
                     );
                   },
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
+                    padding: const EdgeInsets.only(top: 16.0),
                     child: Container(
                       height: screenHeight * .30,
                       width: screenWidth * .80,
@@ -96,21 +113,21 @@ class _FavoriteCarsState extends State<FavoriteCars> {
 
                 Padding(
                   padding:
-                  EdgeInsets.only(top: 32, right: 16, left: 16, bottom: 16),
+                      EdgeInsets.only(top: 32, right: 16, left: 16, bottom: 16),
                   child: Column(
                     children: [
                       Text(
                           "${(widget.favoriteCars[index].carName)}   "
-                              "${(widget.favoriteCars[index].carModel)}   "
-                              "${(widget.favoriteCars[index].carYear)}   "
-                              "\$${(widget.favoriteCars[index].carPrice)}   "
-                              "${(widget.favoriteCars[index].carColor)}",
+                          "${(widget.favoriteCars[index].carModel)}   "
+                          "${(widget.favoriteCars[index].carYear)}   "
+                          "\$${(widget.favoriteCars[index].carPrice)}   "
+                          "${(widget.favoriteCars[index].carColor)}",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.manrope(
-                            letterSpacing: 3,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black54,
-                            fontSize: 14,
+                            letterSpacing: 2,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.black87,
+                            fontSize: 16,
                           )),
                     ],
                   ),
