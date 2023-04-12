@@ -25,31 +25,37 @@ class _CarListViewState extends State<CarListView> {
   // }
 
   List<Car> favoriteCars = [];
+  List<Car> foundCars = [];
+
+  @override
+  void initState() {
+    /// Saving the cars we have in our database for filtering task.
+
+    foundCars = widget.carsFromFirebase;
+    super.initState();
+  }
+
+  void runFilter(String enteredKeyword)
+  {
+    List<Car> results = [];
+
+    if(enteredKeyword.isEmpty)
+      results = widget.carsFromFirebase;
+    else
+      {
+        results = widget.carsFromFirebase.where((car) =>
+            car.carName!.toLowerCase().contains(enteredKeyword.toLowerCase()))
+            .toList();
+      }
+    setState(() {
+      foundCars = results;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    // widget.carsFromFirebase.clear();
     /// We have to take care only to show the cars that were only newly added
-    /*if (widget.carsFromFirebase != null)
-      widget.carsFromFirebase.forEach((car) {
-        print(car.carName);
-        print(car.carModel);
-        print(car.carYear);
-        print(car.carPrice);
-        print(car.carPhoto);
-      });
-*/
-
-    if (favoriteCars != null)
-      favoriteCars.forEach((car) {
-        print(car.carName);
-        print(car.carModel);
-        print(car.carYear);
-        print(car.carPrice);
-        print(car.carPhoto);
-      });
-
-    // print('CATE MASINI AVEM IN BAZA DE DATE: ${widget.carsFromFirebase.length}');
 
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
@@ -63,12 +69,16 @@ class _CarListViewState extends State<CarListView> {
 
         actions: <Widget>[
           TextButton.icon(
-            icon: Icon(IconData(0xe1d7, fontFamily: 'MaterialIcons'),),
+            icon: Icon(
+              IconData(0xe1d7, fontFamily: 'MaterialIcons'),
+            ),
             label: Text('See fav cars'),
             onPressed: () async {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FavoriteCars(favoriteCars: favoriteCars)),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        FavoriteCars(favoriteCars: favoriteCars)),
               );
             },
           ),
@@ -78,111 +88,132 @@ class _CarListViewState extends State<CarListView> {
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
       ),
-      body: ListView.builder(
-        // CarCollection List
-        itemCount: widget.carsFromFirebase.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: Column(
-              children: [
-                /// ADD BUTTON TO GET USER BACK TO THE input_cars_from_user
 
-                /// Cars added to favorites, but the favorites button toggles all the favorites button
-                /// Probabil needs to be implemented in a separated statefull widget
-                // Row(
-                //   mainAxisSize: MainAxisSize.min,
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   children: [
-                //     GestureDetector(
-                //       child: Container(
-                //           child: IconButton(
-                //             padding: EdgeInsets.all(0),
-                //             alignment: Alignment.centerRight,
-                //             icon: (_isFavourite
-                //                 ? (Icon(
-                //               Icons.favorite,
-                //               size: 32,
-                //             ) )
-                //                 : Icon(
-                //               Icons.favorite_outline,
-                //               size: 32,
-                //             )),
-                //             color: Colors.blue,
-                //             onPressed: () {
-                //               _toggleFavouriteButton();
-                //               _isFavourite ? favouriteCars.add(widget.carsFromFirebase[index])
-                //                   : favouriteCars.remove(widget.carsFromFirebase[index]);
-                //             },
-                //           )),
-                //     ),
-                //   ],
-                // ),
-
-                GestureDetector(
-                  // To show the car the user has tapped on
-                  onTap: () {
-                    Navigator.of(context).push(_createRoute(index));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: Container(
-                      height: screenHeight * .30,
-                      width: screenWidth * .80,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        image: DecorationImage(
-                          filterQuality: FilterQuality.high,
-                          alignment: Alignment.topCenter,
-                          fit: BoxFit.fill,
-                          image: NetworkImage(
-                              '${widget.carsFromFirebase[index].carPhoto}'),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Row(
-
-                  ///                       IMPORTANT!!!!
-                  /// IF THE USER LOGGS OUT / CLOSES THE APPLICATION,
-                  /// HE LOSES ALL HIS FAVORITES CARS, NEED TO SOLVE THIS BUG !!
-
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    FavoriteButton(
-                        // isFavorite: false,
-                        valueChanged: (isFavourite) {
-                          isFavourite ? favoriteCars.add(widget.carsFromFirebase[index]) : favoriteCars.remove(widget.carsFromFirebase[index]);
-                        }),
-                  ],
-                ),
-
-                Padding(
-                  padding:
-                      EdgeInsets.only(top: 32, right: 16, left: 16, bottom: 16),
-                  child: Column(
-                    children: [
-                      Text(
-                          "${(widget.carsFromFirebase[index].carName)}   "
-                          "${(widget.carsFromFirebase[index].carModel)}   "
-                          "${(widget.carsFromFirebase[index].carYear)}   "
-                          "\$${(widget.carsFromFirebase[index].carPrice)}   "
-                          "${(widget.carsFromFirebase[index].carColor)}",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.manrope(
-                            letterSpacing: 3,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black54,
-                            fontSize: 14,
-                          )),
-                    ],
-                  ),
-                ),
-              ],
+      body: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            SizedBox(height: 20.0,),
+            TextField(
+              onChanged: (value) => runFilter(value) ,
+              decoration: InputDecoration(
+                labelText: 'Search', suffixIcon: Icon(Icons.search),
+              ),
             ),
-          );
-        },
+            Expanded(
+              child: ListView.builder(
+                // CarCollection List
+                itemCount: foundCars.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    child: Column(
+                      children: [
+                        /// ADD BUTTON TO GET USER BACK TO THE input_cars_from_user
+
+                        /// Cars added to favorites, but the favorites button toggles all the favorites button
+                        /// Probabil needs to be implemented in a separated statefull widget
+                        // Row(
+                        //   mainAxisSize: MainAxisSize.min,
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   children: [
+                        //     GestureDetector(
+                        //       child: Container(
+                        //           child: IconButton(
+                        //             padding: EdgeInsets.all(0),
+                        //             alignment: Alignment.centerRight,
+                        //             icon: (_isFavourite
+                        //                 ? (Icon(
+                        //               Icons.favorite,
+                        //               size: 32,
+                        //             ) )
+                        //                 : Icon(
+                        //               Icons.favorite_outline,
+                        //               size: 32,
+                        //             )),
+                        //             color: Colors.blue,
+                        //             onPressed: () {
+                        //               _toggleFavouriteButton();
+                        //               _isFavourite ? favouriteCars.add(widget.carsFromFirebase[index])
+                        //                   : favouriteCars.remove(widget.carsFromFirebase[index]);
+                        //             },
+                        //           )),
+                        //     ),
+                        //   ],
+                        // ),
+
+                        GestureDetector(
+                          // To show the car the user has tapped on
+                          onTap: () {
+                            Navigator.of(context).push(_createRoute(index));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Container(
+                              height: screenHeight * .30,
+                              width: screenWidth * .80,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                image: DecorationImage(
+                                  filterQuality: FilterQuality.high,
+                                  alignment: Alignment.topCenter,
+                                  fit: BoxFit.fill,
+                                  image: NetworkImage(
+                                      '${foundCars[index].carPhoto}'),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Row(
+                          ///                       IMPORTANT!!!!
+                          /// IF THE USER LOGGS OUT / CLOSES THE APPLICATION,
+                          /// HE LOSES ALL HIS FAVORITES CARS, NEED TO SOLVE THIS BUG !!
+
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            FavoriteButton(
+                                // isFavorite: false,
+                                valueChanged: (isFavourite) {
+                              isFavourite
+                                  ? favoriteCars
+                                      .add(foundCars[index])
+                                  : favoriteCars
+                                      .remove(foundCars[index]);
+                            }),
+                          ],
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: 32, right: 16, left: 16, bottom: 16),
+                          child: Column(
+                            children: [
+                              Text(
+                                  "${(foundCars[index].carName)}   "
+                                  "${(foundCars[index].carModel)}   "
+                                  "${(foundCars[index].carYear)}   "
+                                  "\$${(foundCars[index].carPrice)}   "
+                                  "${(foundCars[index].carColor)}",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.manrope(
+                                    letterSpacing: 3,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black54,
+                                    fontSize: 14,
+                                  )),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -192,7 +223,7 @@ class _CarListViewState extends State<CarListView> {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
           CarViewFullScreen(
-              carFromFirebase: widget.carsFromFirebase[index], index: index),
+              carFromFirebase: foundCars[index], index: index),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;
@@ -209,123 +240,3 @@ class _CarListViewState extends State<CarListView> {
     );
   }
 }
-
-/// STATELESSWIDGET
-/*
-class CarListView extends StatelessWidget {
-  final List<Car> carsFromFirebase;
-
-  const CarListView({Key? key, required this.carsFromFirebase})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    /// We have to take care only to show the cars that were only newly added
-    if (carsFromFirebase != null)
-      carsFromFirebase.forEach((car) {
-        print(car.carName);
-        print(car.carModel);
-        print(car.carYear);
-        print(car.carPrice);
-        print(car.carPhoto);
-      });
-    // carsFromFirebase.clear();
-
-    var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
-
-    /// Best create it with ListView widget
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        // back button disabled
-        title: Text('Our added cars'),
-        backgroundColor: Colors.brown[400],
-        elevation: 0.0,
-
-         actions: <Widget>[
-          TextButton.icon(
-              icon: Icon(
-                Icons.keyboard_backspace_outlined,
-                color: Colors.black87,
-              ),
-              label: const Text(''),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          InputCarsFromUser()),
-                );
-                //widget.toggleView(),
-              }),
-        ],
-      ),
-      body: ListView.builder(
-        // CarCollection List
-        itemCount: carsFromFirebase.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: Column(
-              children: [
-                /// ADD BUTTON TO GET USER BACK TO THE input_cars_from_user
-
-                GestureDetector(
-                  // To show the car the user has tapped on
-                   onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CarViewFullScreen(
-                            carFromFirebase: carsFromFirebase[index], index: index)),
-                  ),
-
-                  // onTap: {Navigator.of(context).push(_createRoute())},
-
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: Container(
-                      height: screenHeight * .30,
-                      width: screenWidth * .80,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        image: DecorationImage(
-                          alignment: Alignment.topCenter,
-                          fit: BoxFit.fill,
-                          image: NetworkImage(
-                              '${carsFromFirebase[index].carPhoto}'),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      EdgeInsets.only(top: 32, right: 16, left: 16, bottom: 16),
-                  child: Column(
-                    children: [
-                      Text(
-                          "${(carsFromFirebase[index].carName)}   "
-                          "${(carsFromFirebase[index].carModel)}   "
-                          "${(carsFromFirebase[index].carYear)}   "
-                          "\$${(carsFromFirebase[index].carPrice)}   "
-                          "${(carsFromFirebase[index].carColor)}",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.manrope(
-                            letterSpacing: 3,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black54,
-                            fontSize: 14,
-                          )),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-}*/
