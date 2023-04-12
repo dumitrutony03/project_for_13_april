@@ -1,6 +1,7 @@
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project_for_13_april/screens/pages/favorite_cars.dart';
 import '../../models/car.dart';
 import 'car_view_fullscreen.dart';
 
@@ -23,7 +24,7 @@ class _CarListViewState extends State<CarListView> {
   //   });
   // }
 
-  List<Car> favouriteCars = [];
+  List<Car> favoriteCars = [];
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +40,8 @@ class _CarListViewState extends State<CarListView> {
       });
 */
 
-    if (favouriteCars != null)
-      favouriteCars.forEach((car) {
+    if (favoriteCars != null)
+      favoriteCars.forEach((car) {
         print(car.carName);
         print(car.carModel);
         print(car.carYear);
@@ -59,6 +60,19 @@ class _CarListViewState extends State<CarListView> {
         centerTitle: true,
         // back button disabled/enabled
         automaticallyImplyLeading: true,
+
+        actions: <Widget>[
+          TextButton.icon(
+            icon: Icon(IconData(0xe1d7, fontFamily: 'MaterialIcons'),),
+            label: Text('See fav cars'),
+            onPressed: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FavoriteCars(favoriteCars: favoriteCars)),
+              );
+            },
+          ),
+        ],
 
         title: Text('Our added cars'),
         backgroundColor: Colors.brown[400],
@@ -129,12 +143,17 @@ class _CarListViewState extends State<CarListView> {
                   ),
                 ),
                 Row(
+
+                  ///                       IMPORTANT!!!!
+                  /// IF THE USER LOGGS OUT / CLOSES THE APPLICATION,
+                  /// HE LOSES ALL HIS FAVORITES CARS, NEED TO SOLVE THIS BUG !!
+
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     FavoriteButton(
-                        isFavorite: false,
+                        // isFavorite: false,
                         valueChanged: (isFavourite) {
-                          isFavourite ? favouriteCars.add(widget.carsFromFirebase[index]) : favouriteCars.remove(widget.carsFromFirebase[index]);
+                          isFavourite ? favoriteCars.add(widget.carsFromFirebase[index]) : favoriteCars.remove(widget.carsFromFirebase[index]);
                         }),
                   ],
                 ),
