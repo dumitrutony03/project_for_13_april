@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/text_editing_controllers.dart';
 import '../../models/car.dart';
-import '../../services/database.dart';
 import '../../shared/constants.dart';
 import '../../shared/loading.dart';
 import 'car_list_view.dart';
