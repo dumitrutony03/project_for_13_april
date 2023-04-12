@@ -173,7 +173,7 @@ class _InputCarsFromUserState extends State<InputCarsFromUser> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Car link from wikipedia',
+                        'Link with photo',
                         style: GoogleFonts.manrope(
                           letterSpacing: 1,
                           fontWeight: FontWeight.w500,
