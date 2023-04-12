@@ -2,6 +2,7 @@ import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project_for_13_april/screens/pages/favorite_cars.dart';
+import 'package:project_for_13_april/shared/constants.dart';
 import '../../models/car.dart';
 import 'car_view_fullscreen.dart';
 
@@ -37,6 +38,8 @@ class _CarListViewState extends State<CarListView> {
 
   void runFilter(String enteredKeyword)
   {
+    /// Applying search by KEYWORDS,
+
     List<Car> results = [];
 
     if(enteredKeyword.isEmpty)
@@ -90,18 +93,28 @@ class _CarListViewState extends State<CarListView> {
       ),
 
       body: Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(12.0),
         child: Column(
           children: [
             SizedBox(height: 20.0,),
             TextField(
               onChanged: (value) => runFilter(value) ,
-              decoration: InputDecoration(
-                labelText: 'Search', suffixIcon: Icon(Icons.search),
-              ),
+              decoration: textInputDecoration.copyWith(labelText: 'Search by name', suffixIcon: Icon(Icons.search), hintText: 'Ex: Toyota'),
+
             ),
+            SizedBox(height: 16,),
             Expanded(
-              child: ListView.builder(
+              /// Advantages instead of using ListView.builder is that, if you have a lot of cars that need to be shown
+              /// ListView will create them as we access them from the database, instead,
+              /// GridView will create them as we are scrolling down
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: screenWidth,
+                  childAspectRatio: 1,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20,
+                ),
+
                 // CarCollection List
                 itemCount: foundCars.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -166,12 +179,11 @@ class _CarListViewState extends State<CarListView> {
                             ),
                           ),
                         ),
+                        SizedBox(height: 16,),
                         Row(
                           ///                       IMPORTANT!!!!
                           /// IF THE USER LOGGS OUT / CLOSES THE APPLICATION,
                           /// HE LOSES ALL HIS FAVORITES CARS, NEED TO SOLVE THIS BUG !!
-
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             FavoriteButton(
                                 // isFavorite: false,
@@ -191,10 +203,10 @@ class _CarListViewState extends State<CarListView> {
                           child: Column(
                             children: [
                               Text(
-                                  "${(foundCars[index].carName)}   "
-                                  "${(foundCars[index].carModel)}   "
-                                  "${(foundCars[index].carYear)}   "
-                                  "\$${(foundCars[index].carPrice)}   "
+                                  "${(foundCars[index].carName)}  "
+                                  "${(foundCars[index].carModel)}  "
+                                  "${(foundCars[index].carYear)}  "
+                                  "\$${(foundCars[index].carPrice)}  "
                                   "${(foundCars[index].carColor)}",
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.manrope(

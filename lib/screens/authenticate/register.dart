@@ -51,10 +51,10 @@ class _RegisterState extends State<Register> {
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
-                    const SizedBox(height: 20.0),
+                    const SizedBox(height: 12.0),
                     TextFormField(
                       decoration:
-                          textInputDecoration.copyWith(hintText: 'email'),
+                          textInputDecoration.copyWith(hintText: 'Email'),
                       validator: (val) =>
                           (val!.isEmpty) || (val.trim().length < 6)
                               ? 'Enter an email'
@@ -63,10 +63,10 @@ class _RegisterState extends State<Register> {
                         setState(() => email = val);
                       },
                     ),
-                    const SizedBox(height: 20.0),
+                    const SizedBox(height: 12.0),
                     TextFormField(
                       decoration:
-                          textInputDecoration.copyWith(hintText: 'password'),
+                          textInputDecoration.copyWith(hintText: 'Password'),
                       obscureText: true,
                       validator: (val) =>
                           (val!.length < 6) || (val.trim().length < 6)
@@ -76,7 +76,7 @@ class _RegisterState extends State<Register> {
                         setState(() => password = val);
                       },
                     ),
-                    const SizedBox(height: 20.0),
+                    const SizedBox(height: 12.0),
                     TextButton(
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.pink[400],
@@ -116,7 +116,7 @@ class _RegisterState extends State<Register> {
                             }
                           }
                         }),
-                    const SizedBox(height: 12.0),
+                    const SizedBox(height: 10.0),
                     Text(
                       error,
                       style: const TextStyle(color: Colors.red, fontSize: 14.0),

@@ -27,6 +27,8 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+
     return loading
         ? Loading()
         : Scaffold(
@@ -57,7 +59,7 @@ class _SignInState extends State<SignIn> {
                     SizedBox(height: 20.0),
                     TextFormField(
                       decoration:
-                          textInputDecoration.copyWith(hintText: 'email'),
+                          textInputDecoration.copyWith(hintText: 'Email'),
                       validator: (val) =>
                           (val!.isEmpty) || (val.trim().length < 6)
                               ? 'Enter an email'
@@ -66,11 +68,11 @@ class _SignInState extends State<SignIn> {
                         setState(() => email = val);
                       },
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 12.0),
                     TextFormField(
                       obscureText: true,
                       decoration:
-                          textInputDecoration.copyWith(hintText: 'password'),
+                          textInputDecoration.copyWith(hintText: 'Password'),
                       validator: (val) =>
                           (val!.length < 6) || (val.trim().length < 6)
                               ? 'Enter a password 6+ chars long'
@@ -79,7 +81,7 @@ class _SignInState extends State<SignIn> {
                         setState(() => password = val);
                       },
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 12.0),
                     TextButton(
                         style: TextButton.styleFrom(
                             foregroundColor: Colors.pink[400]),
@@ -99,18 +101,17 @@ class _SignInState extends State<SignIn> {
                                 error =
                                     'Could not sign in with those credentials';
                               });
+                            } else {
+                              setState(() {
+                                loading = true;
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Home()),
+                                );
+                                loading = false;
+                              });
                             }
-                            else
-                              {
-                                setState(() {
-                                  loading = true;
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Home()),
-                                  );
-                                  loading = false;
-                                });
-                              }
                           }
                         }),
                     SizedBox(height: 12.0),
