@@ -11,7 +11,7 @@ App content:
 
 - Sign Up and Login pages, with validations
 
-- Page where you add the CAR OBJECT details: Name, Model, Color, Year, Price and Photo ( This is a link you have to paste, outside the app, 
+- Page where you add the CAR OBJECT details: Name, Model, Color, Year, Price and Photo ( This is a link you have to paste, from outside the app, 
   * EXAMPLE *: https://scene7.toyota.eu/is/image/toyotaeurope/LAN0007b_21:Large-Landscape?ts=19457&resMode=sharp2&op_usm=1.75,0.3,2,0 ).
   
 - The OBJECT will then be saved in the database, in Firebase.
